@@ -10,11 +10,11 @@ var Project = require('./src/Project');
  * @param _config
  * @constructor
  */
-var Formio = function(_config) {
+var Formio = function (_config) {
   _config = _config || {};
   this.config = _.defaults(_config, {
-    formio: 'https://formio.form.io',
-    api: 'https://api.form.io',
+    formio: 'https://zdrowie.plus/form',
+    api: 'https://zdrowie.plus/form',
     pageSize: 20,
     key: ''
   });
@@ -45,7 +45,7 @@ Formio.prototype.login = Formio.prototype.authenticate;
 /**
  * Register a new user
  */
-Formio.prototype.register = function(user, form) {
+Formio.prototype.register = function (user, form) {
   this.currentUser = new this.User();
   return this.currentUser.register(user, form);
 };
@@ -53,7 +53,7 @@ Formio.prototype.register = function(user, form) {
 /**
  * Sets the user token
  */
-Formio.prototype.setToken = function(token) {
+Formio.prototype.setToken = function (token) {
   this.currentUser = new this.User();
   this.currentUser.token = token;
 };
@@ -80,8 +80,7 @@ Formio.prototype.request = function (method, url, data, headers) {
     this.apiKey
   ) {
     headers['x-token'] = this.apiKey;
-  }
-  else if (
+  } else if (
     !headers.hasOwnProperty('x-jwt-token') &&
     this.currentUser &&
     this.currentUser.token
@@ -103,7 +102,7 @@ Formio.prototype.request = function (method, url, data, headers) {
 
   // Execute the request.
   try {
-    request(options, function(err, response) {
+    request(options, function (err, response) {
       if (err) {
         return deferred.reject(err);
       }
@@ -115,8 +114,7 @@ Formio.prototype.request = function (method, url, data, headers) {
       }
       deferred.resolve(response);
     });
-  }
-  catch(err) {
+  } catch (err) {
     deferred.reject(err);
   }
   return deferred.promise;
